@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+import cffi
+import os
+
+ffi = cffi.FFI()
+
+# Load library
+lib = ffi.dlopen("{{ OBJ_PATH }}")
+
+# Define the function prototypes
+ffi.cdef('''
+{% for idx, cdef in FFI_CDEFS.iteritmes() %}
+  {{ cdef }}
+{% endfor %}
+''')
+
+# Call library function and attach a garbage collector to returned string
+
+{% for idx, call_wrapper in FFI_CALL_WRAPPERS.iteritmes() %}
+  {{ call_wrapper }}
+{% endfor %}
+
